@@ -21,5 +21,5 @@ from shoplistapp import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.index, name='index'),
-    path('test', views.test, name='test')
+    path('stores/', views.index_json, name='index_json'),
 ]

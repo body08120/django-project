@@ -1,14 +1,18 @@
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.template import loader
+from .models import Store
+from django.http import HttpResponse, JsonResponse
 
 # Create your views here.
+
+# Renvoyer la table Store en html
 def index(request):
-    return HttpResponse('Hello from Django')
+    stores = Store.objects.all()
+    template = loader.get_template('index.html')
+    context = {'stores': stores}
+    return HttpResponse(template.render(context, request))
 
-def test(request):
-    # Récupérer les données d'un utilisateur depuis la base de données.
-    # Stocker ces données dans un model (crée pour)
-    # Intégrer les attributs de l'objet dans le html
-
-    html = ''
-    return HttpResponse(html)
+# Renvoyer la table Store en json
+def index_json(request):
+    stores = Store.objects.all().values()
+    return JsonResponse(data=list(stores), safe=False)
